@@ -22,14 +22,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'jose'     # should be secure in production case
 api = Api(app)
 
-
-"""This decorator will register a function to be run before 
-the first request to this instance of the application."""
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
-
 jwt = JWT(app, authenticate, identity)
 
 
