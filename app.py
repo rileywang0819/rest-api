@@ -15,11 +15,18 @@ from db import db
 # ==================
 
 app = Flask(__name__)
+
 # the SQLAlchemy db lives at the root folder of our project "/data.db"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+heroku_db_uri = os.getenv("DATABASE_URL")
+if heroku_db_uri and heroku_db_uri.startswith("postgres://"):
+    heroku_db_uri = heroku_db_uri.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = heroku_db_uri if heroku_db_uri else 'sqlite:///data.db'
 # turn off the flask_sqlalchemy extension's modification tracker (but not turn off the sqlalchemy's tracker)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 app.secret_key = 'jose'     # should be secure in production case
+
 api = Api(app)
 
 jwt = JWT(app, authenticate, identity)
