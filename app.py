@@ -39,4 +39,9 @@ api.add_resource(UserRegister, '/register')
 if __name__ == '__main__':
     # link app with sqlalchemy integration
     db.init_app(app)
+
+    @app.before_first_request
+    def create_tables():
+        db.create_all()
+
     app.run(debug=True)
