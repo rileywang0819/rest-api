@@ -16,7 +16,7 @@ from db import db
 
 app = Flask(__name__)
 
-# the SQLAlchemy db lives at the root folder of our project "/data.db"
+# the SQLAlchemy db lives at Heroku Postgres or the root folder of our project "/data.db"
 heroku_db_uri = os.getenv("DATABASE_URL")
 if heroku_db_uri and heroku_db_uri.startswith("postgres://"):
     heroku_db_uri = heroku_db_uri.replace("postgres://", "postgresql://", 1)
